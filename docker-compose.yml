@@ -1,0 +1,55 @@
+version: '3'
+
+services:
+  graphql-server:
+    image: node
+    working_dir: /server
+    command: npm start
+    ports:
+      - 4000:4000
+    environment:
+      NODE_ENV: development
+      LISTEN_HOST: 0.0.0.0
+      LISTEN_PORT: 4000
+      MONGO_DB_URL: mongodb://graphql_db:27017/graphql_db
+      MONGO_DB_NAME: graphql_db
+    volumes:
+      - ./server:/server
+    depends_on:
+      - graphql_db
+    networks:
+      graphql-test-network:
+        aliases:
+          - server
+
+  graphql_db:
+    image: "mongo"
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+    networks:
+      - graphql-test-network
+
+  graphql-app:
+    image: node
+    working_dir: /app
+    command: npm start
+    depends_on:
+      - graphql-server
+    ports:
+      - 3000:3000
+    environment:
+      REACT_APP_GRAPHQL_SERVER_API_URL: http://localhost:4000
+    volumes:
+      - ./app:/app
+    networks:
+      graphql-test-network:
+        aliases:
+          - frontend
+volumes:
+  mongo-data:
+
+networks:
+  graphql-test-network:
+    driver: bridge
