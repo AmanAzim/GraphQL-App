@@ -23,7 +23,7 @@ const dbServices = {
         return BookSchema.find();
     },
     async findAllAuthors() {
-        return AuthorSchema.findOne();
+        return AuthorSchema.find();
     },
 }
 

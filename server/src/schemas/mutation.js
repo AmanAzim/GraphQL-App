@@ -9,7 +9,7 @@ const Mutation = new GraphQLObjectType({
     fields: {
         addAuthor: {
             type: AuthorType,
-            args: { id: { type: new GraphQLNonNull(GraphQLInt) }, name: { type: new GraphQLNonNull(GraphQLString) }, age: { type: new GraphQLNonNull(GraphQLInt) } },
+            args: { id: { type: GraphQLInt }, name: { type: new GraphQLNonNull(GraphQLString) }, age: { type: new GraphQLNonNull(GraphQLInt) } },
             resolve(parent, args) {
                 const { id, name, age } = args;
                 return dbServices.addAuthor({ id, name, age });
@@ -17,7 +17,7 @@ const Mutation = new GraphQLObjectType({
         },
         addBook: {
             type: BookType,
-            args: { id: { type: new GraphQLNonNull(GraphQLInt) }, name: { type: new GraphQLNonNull(GraphQLString) }, genre: { type: new GraphQLNonNull(GraphQLString)}, authorId: { type: GraphQLID } },
+            args: { id: { type: GraphQLInt }, name: { type: new GraphQLNonNull(GraphQLString) }, genre: { type: new GraphQLNonNull(GraphQLString)}, authorId: { type: GraphQLID } },
             resolve(parent, args) {
                 const { id, name, genre, authorId } = args;
                 return dbServices.addBook({ id, name, genre, authorId });

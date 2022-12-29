@@ -6,6 +6,7 @@ const BookType = new GraphQLObjectType({
     name: 'Book',
     fields: () => ({ // we use call back instead of Object in cases where we have sircular dependency like author and book so that no matter where they are written in the js file they can be read when the callback is called but if we hads object it had to be defined in time of the file loads not in times of the relation is called in conjunction which will give error
         id: { type: GraphQLID },
+        _id: { type: GraphQLID },
         name: { type: GraphQLString },
         genre: { type: GraphQLString },
         author: { 
@@ -22,6 +23,7 @@ const AuthorType = new GraphQLObjectType({
     name: 'Author',
     fields: () => ({
         id: { type: GraphQLID },
+        _id: { type: GraphQLID },
         name: { type: GraphQLString },
         age: { type: GraphQLInt },
         books: { 

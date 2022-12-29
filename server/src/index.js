@@ -1,6 +1,7 @@
 const express = require('express');
 const { graphqlHTTP } = require('express-graphql');
 const mongoose = require('mongoose');
+const cors = require('cors');
 
 const { seedDb } = require('./seed');
 const rootSchema = require('./schemas/rootSchema');
@@ -9,6 +10,8 @@ const app = express();
 
 const port = parseInt(process.env.LISTEN_PORT || '4000');
 const host = process.env.LISTEN_HOST || '0.0.0.0';
+
+app.use(cors());
 
 app.use('/graphql', graphqlHTTP({ 
     schema: rootSchema,
